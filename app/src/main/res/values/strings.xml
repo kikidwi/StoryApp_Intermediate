@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="empty_list">kosong\n</string>
+    <string name="yes">yes</string>
+    <string name="No">no</string>
+    <string name="list_story_page">Detail Story\n</string>
+    <string name="description">Deskripsi\n</string>
+    <string name="upload_story">Add Story</string>
+</resources>
