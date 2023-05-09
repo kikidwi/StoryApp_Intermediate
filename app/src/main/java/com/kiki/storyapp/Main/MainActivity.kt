@@ -1,20 +1,26 @@
-package com.kiki.storyapp
+package com.kiki.storyapp.Main
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kiki.storyapp.AddStory.AddStoryActivity
+import com.kiki.storyapp.Detail.DetailActivity
+import com.kiki.storyapp.Login.LoginActivity
 import com.kiki.storyapp.Model.userPreference
+import com.kiki.storyapp.R
 import com.kiki.storyapp.Response.ListStory
 import com.kiki.storyapp.databinding.ActivityMainBinding
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "Setting")
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "Setting")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var mainViewModel : MainViewModel
@@ -27,7 +33,9 @@ class MainActivity : AppCompatActivity() {
             this,
             ViewModelFactory(userPreference.getInstance(dataStore))
         )[MainViewModel::class.java]
-        mainViewModel.getStory("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUNqTDRwY1RTYXA2WlJpaVQiLCJpYXQiOjE2ODI3Mjk0NjB9.fUrDotNVIvzDfXJoaYcLFq8r-OrgNMy6YMk7RlMP0O8")
+
+
+        setupViewModel()
 
         mainViewModel.listStory.observe(this) {
             if (it.isEmpty()) {
@@ -50,6 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvStory.layoutManager = layoutManager
+        binding.rvStory.setHasFixedSize(false)
 
         binding.btnAddStory.setOnClickListener{
             startActivity(Intent(this@MainActivity, AddStoryActivity::class.java))
@@ -67,4 +76,56 @@ class MainActivity : AppCompatActivity() {
         })
         binding.rvStory.adapter = adapter
     }
+
+
+    private fun setupViewModel() {
+        mainViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(userPreference.getInstance(dataStore))
+        )[MainViewModel::class.java]
+
+        mainViewModel.getUser().observe(this) { user ->
+            if (user.isLogin) {
+                AddStoryActivity.TOKEN = user.token
+                mainViewModel.getStory(user.token)
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.ic_logout -> logoutDialog()
+        }
+        return true
+    }
+
+
+    private fun logoutDialog() {
+        val dialogMessage = getString(R.string.logout_msg)
+        val dialogTitle = getString(R.string.logout)
+
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle(dialogTitle)
+
+        alertDialogBuilder
+            .setMessage(dialogMessage)
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                mainViewModel.logout()
+                finish()
+            }
+            .setNegativeButton(getString(R.string.No)) { dialog, _ -> dialog.cancel() }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
 }

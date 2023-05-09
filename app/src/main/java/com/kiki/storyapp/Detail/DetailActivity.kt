@@ -1,8 +1,9 @@
-package com.kiki.storyapp
+package com.kiki.storyapp.Detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.kiki.storyapp.R
 import com.kiki.storyapp.Response.ListStory
 import com.kiki.storyapp.databinding.ActivityDetailBinding
 

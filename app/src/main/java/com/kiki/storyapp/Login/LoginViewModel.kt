@@ -20,11 +20,22 @@ class LoginViewModel(private val pref: userPreference) : ViewModel() {
     private val _msg = MutableLiveData<String>()
     val msg: LiveData<String> = _msg
 
+    private val _Loading = MutableLiveData<Boolean>()
+    val Loading : LiveData<Boolean> = _Loading
+
+
     fun getUser(): LiveData<userModel> {
         return pref.getUser().asLiveData()
     }
 
-    fun authenticate(email: String, password: String) {
+    fun login(token: String) {
+        viewModelScope.launch {
+            pref.login(token)
+        }
+    }
+
+    fun Auth(email: String, password: String) {
+        _Loading.value = true
         val client = ApiConfig.getApiService().login(email, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -33,8 +44,8 @@ class LoginViewModel(private val pref: userPreference) : ViewModel() {
             }
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-
                 if (response.isSuccessful) {
+                    _Loading.value = false
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error) {
                         _msg.value = "Login Success"
@@ -53,6 +64,7 @@ class LoginViewModel(private val pref: userPreference) : ViewModel() {
                         _msg.value = responseBody?.message
                     }
                 } else {
+                    _Loading.value = false
                     val responseBody = Gson().fromJson(
                         response.errorBody()?.charStream(),
                         LoginResponse::class.java

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:elevation="8dp"
     app:cardCornerRadius="16dp"
-    app:cardMaxElevation="7dp"
+    app:cardMaxElevation="5dp"
     app:cardUseCompatPadding="true">
 
    <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +30,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
 
+           android:layout_marginTop="8dp"
            android:textSize="20dp"
            android:textStyle="bold"
            app:layout_constraintStart_toStartOf="@+id/iv_item_photo"

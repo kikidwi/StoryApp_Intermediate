@@ -1,10 +1,9 @@
-package com.kiki.storyapp
+package com.kiki.storyapp.Main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.kiki.storyapp.Response.ListStory
 import com.kiki.storyapp.databinding.ItemStoryBinding
 

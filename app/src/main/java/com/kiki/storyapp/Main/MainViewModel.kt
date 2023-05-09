@@ -1,13 +1,17 @@
-package com.kiki.storyapp
+package com.kiki.storyapp.Main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.kiki.storyapp.Api.ApiConfig
+import com.kiki.storyapp.Model.userModel
 import com.kiki.storyapp.Model.userPreference
 import com.kiki.storyapp.Response.ListStory
 import com.kiki.storyapp.Response.StoryResponse
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,6 +19,16 @@ import retrofit2.Response
 class MainViewModel(private val pref: userPreference) : ViewModel(){
     private val _listStory = MutableLiveData<List<ListStory>>()
     val listStory: LiveData<List<ListStory>> = _listStory
+
+    fun getUser(): LiveData<userModel> {
+        return pref.getUser().asLiveData()
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            pref.logout()
+        }
+    }
 
     fun getStory(token: String) {
         ApiConfig.getApiService()
