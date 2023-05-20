@@ -19,11 +19,12 @@ import com.kiki.storyapp.Login.LoginActivity
 import com.kiki.storyapp.Model.userPreference
 import com.kiki.storyapp.R
 import com.kiki.storyapp.Main.ViewModelFactory
+import com.kiki.storyapp.databinding.ActivityLoginBinding
 import com.kiki.storyapp.databinding.ActivityRegisterBinding
+import java.lang.Error
 import java.lang.ref.WeakReference
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-
 var weakReference: WeakReference<ActivityRegisterBinding>? = null
 
 class RegisterActivity : AppCompatActivity() {
@@ -33,13 +34,14 @@ class RegisterActivity : AppCompatActivity() {
 
 
     companion object {
-        var isError = false
-        fun isErrorPassword(b: Boolean) {
+        fun isErrorPassword(isError: Boolean) {
             val binding = weakReference?.get()
-            binding?.layoutPassword?.isEndIconVisible = !b
-            binding?.btnRegister?.isEnabled = !b
+            binding?.layoutPassword?.isEndIconVisible = !isError
+            binding?.btnRegister?.isEnabled = !isError
+
         }
 
+        var isError = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        weakReference = WeakReference(binding)
         setupView()
         setupViewModel()
         setupAction()

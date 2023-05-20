@@ -8,4 +8,10 @@
         android:icon="@drawable/ic_logout"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/ic_map"
+        android:title="Maps"
+        android:icon="@drawable/ic_map"
+        app:showAsAction="always"/>
+
 </menu>

@@ -41,7 +41,6 @@ class CustomPasswordEditText : AppCompatEditText {
                     error = context.getString(R.string.password_min_length)
                     LoginActivity.isErrorPassword(true)
                     RegisterActivity.isErrorPassword(true)
-
                 }
 
             }

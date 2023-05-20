@@ -65,21 +65,24 @@
         android:hint="Password"
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="outline"
+        app:helperText=""
+        app:helperTextEnabled="true"
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutEmail"
-        app:startIconDrawable="@drawable/ic_password"
         app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_password"
         android:alpha="0">
 
         <com.kiki.storyapp.CustomView.CustomPasswordEditText
-            android:id="@+id/etPassword"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:ems="10"
             android:inputType="textPassword"
-            android:textSize="18dp"
-            app:passwordToggleEnabled="true"/>
+            app:passwordToggleEnabled="true"
+            android:textSize="18dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,16 +102,16 @@
         android:alpha="0"/>
 
     <com.kiki.storyapp.CustomView.CustomButtonRegister
-        android:id="@+id/btnRegister"
+        android:id="@+id/btn_register"
         android:layout_width="164dp"
         android:layout_height="52dp"
         android:layout_marginTop="16dp"
-        android:alpha="0"
+        android:alpha="1"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutPassword"
-        android:enabled="false"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/layoutPassword" />
+
 
     <ProgressBar
         android:id="@+id/loading"
@@ -128,7 +131,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegister">
+        app:layout_constraintTop_toBottomOf="@+id/btn_register">
 
         <TextView
             android:id="@+id/tvKetLogin"
@@ -148,7 +151,7 @@
             android:text="Login Sekarang"
             android:textColor="#FF0000"
             app:layout_constraintStart_toEndOf="@+id/tvKetLogin"
-            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

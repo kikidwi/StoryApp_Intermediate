@@ -17,4 +17,10 @@
     <string name="txt_msg_password_error">Password harus memiliki 8 karakter</string>
     <string name="password_min_length">Password harus memiliki 8 karakter</string>
     <string name="invalid_email">Invalid Email\n</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satellite</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
+    <string name="retry">Coba lagi</string>
 </resources>
